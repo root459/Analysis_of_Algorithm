@@ -1,40 +1,47 @@
 #include<stdio.h>
-#include<conio.h>
-int a[20][20],reach[20],n;
-void dfs(int v){
-int i;
-reach[v]=1;
-for(i=1;i<=n;i++){
-if(a[v][i] && !reach[i]){
-printf("\n%d -> %d",v,i);
-dfs(i);
-}
-}
-}
-void main(){
-int i,j,count=0;
-clrscr();
-printf("\nEnter the number of nodes:");
-scanf("%d",&n);
-for(i=1;i<=n;i++){
-reach[i]=0;
-for(j=1;j<=n;j++)
-a[i][j]=0;
-}
+int a[20][20] , q[20] , visited[20] ,n,i,j,f=-1,r=0;
 
-printf("\nEnter the adjacency matrix:\n");
-for(i=1;i<=n;i++)
-for(j=1;j<=n;j++)
-scanf("%d",&a[i][j]);
-dfs(1);
-printf("\n");
-for(i=1;i<=n;i++){
-if(reach[i])
-count++;
+void bfs(int v){
+ q[++r]=v;
+ visited[v]=1;
+ while(f<=r){
+ for(i=1;i<=n;i++){
+ if(a[v][i]&& !visited[i]){
+ visited[i]=1;
+ q[++r]=i;
+ } //for loop close
+ } //if close
+ f++;
+ v=q[f];     
+ } //while loop
+ } //func close
+
+ void main(){
+ int v;
+ printf("\n enter the no. oif vertices:");
+ scanf("%d", &n);
+ for(i=1;i<=n;i++){
+ q[i]=0;
+ visited[i]=0;
+ }//for loop
+
+ printf("\Enter Graph data in matrix:");
+ for(i=1;i<=n;i++){
+ for(j=1;j<=n;j++){
+ scanf("%d" ,&a[i][j]);
+ }
+ }
+ printf("Enter the starting vertex:");
+ scanf("%d" ,&v);
+ bfs(v);
+ printf("\n the node which are reachable are:");
+ for(i=1;i<=n;i++){
+ if(visited[i]){
+ printf("%d\t" ,q[i]);
+ }
+ else{
+ printf("\n BFS is not Possible");
 }
-if(count==n)
-printf("\nGraph is connected");
-else
-printf("\.Graph is diosconnected");
+}
 getch();
-}
+ }//main close
